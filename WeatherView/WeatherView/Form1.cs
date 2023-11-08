@@ -31,11 +31,10 @@ namespace WeatherView
 
                 string[] testCoords = File.ReadAllLines($"{Application.StartupPath}/loc.txt");
 
-                var r = client.GetMiniWeatherResponse(
-                    new MiniWeatherRequest(
+                var r = client.GetWeatherResponse(
+                    new WeatherRequest(
                         Convert.ToSingle(testCoords[0]), 
-                        Convert.ToSingle(testCoords[1]), 
-                        DateTime.Now, e));
+                        Convert.ToSingle(testCoords[1])));
             }
         }
     }

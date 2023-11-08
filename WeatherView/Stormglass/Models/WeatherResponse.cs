@@ -13,14 +13,28 @@ namespace GEM.API.Stormglass.Models
         public int RequestCount { get; set; }
         public float Latitude { get; set; }
         public float Longitude { get; set; }
+        public string[] Params { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
 
-        public WeatherResponse(WeatherHour[] hours, int dailyQuota, int requestCount, float latitude, float longitude)
+        public WeatherResponse(
+            WeatherHour[] hours, 
+            int dailyQuota, 
+            int requestCount, 
+            float latitude, 
+            float longitude,
+            string[] parameters,
+            DateTime start,
+            DateTime end)
         {
             Hours = hours;
             DailyQuota = dailyQuota;
             RequestCount = requestCount;
             Latitude = latitude;
             Longitude = longitude;
+            Params = parameters;
+            Start = start;
+            End = end;
         }
     }
 }

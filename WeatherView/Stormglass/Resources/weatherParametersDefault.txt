@@ -1,0 +1,8 @@
+airTemperature
+gust
+humidity
+precipitation
+visibility
+waterTemperature
+windDirection
+windSpeed

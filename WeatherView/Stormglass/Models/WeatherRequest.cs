@@ -12,14 +12,22 @@ namespace GEM.API.Stormglass.Models
         {
             Latitude = latitude;
             Longitude = longitude;
+            Parameters = new WeatherParameterTable();
+            string[] strings = Properties.Resources.weatherParametersDefault.Split('\n');
+            foreach (string s in strings)
+                Parameters.Parameters[s] = true;
         }
         public WeatherRequest(float latitude, float longitude, DateTime end)
         {
             Latitude = latitude;
             Longitude = longitude;
             End = end;
+            Parameters = new WeatherParameterTable();
+            string[] strings = Properties.Resources.weatherParametersDefault.Split('\n');
+            foreach (string s in strings)
+                Parameters.Parameters[s] = true;
         }
-        public WeatherRequest(float latitude, float longitude, string parameters, DateTime start, DateTime end, string source)
+        public WeatherRequest(float latitude, float longitude, WeatherParameterTable parameters, DateTime start, DateTime end, WeatherSources source)
         {
             Latitude = latitude;
             Longitude = longitude;
@@ -31,17 +39,17 @@ namespace GEM.API.Stormglass.Models
 
         public float Latitude { get; set; }
         public float Longitude { get; set; }
-        public string Parameters { get; set; } = "time,airTemperature,airTemperature80m,airTemperature100m,airTemperature1000hpa,airTemperature800hpa,airTemperature500hpa,airTemperature200hpa,pressure,cloudCover,currentDirection,currentSpeed,gust,humidity,iceCover,precipitation,snowDepth,seaLevel,swellDirection,swellHeight,swellPeriod,secondarySwellPeriod,secondarySwellDirection,secondarySwellHeight,visibility,waterTemperature,waveDirection,waveHeight,wavePeriod,windWaveDirection,windWaveHeight,windWavePeriod,windDirection,windDirection20m,windDirection30m,windDirection40m,windDirection50m,windDirection80m,windDirection100m,windDirection1000hpa,windDirection800hpa,windDirection500hpa,windDirection200hpa,windSpeed,windSpeed20m,windSpeed30m,windSpeed40m,windSpeed50m,windSpeed80m,windSpeed100m,windSpeed1000hpa,windSpeed800hpa,windSpeed500hpa,windSpeed200hpa";
+        public WeatherParameterTable Parameters { get; set; }
         public DateTime? Start { get; set; } = null;
         public DateTime? End { get; set; } = null;
-        public string Source { get; set; } = string.Empty;
+        public WeatherSources Source { get; set; } = WeatherSources.none;
 
         public string RequestString()
         {
-            string r = $"?lat={Latitude}&lng={Longitude}&params={Parameters}";
+            string r = $"?lat={Latitude}&lng={Longitude}&params={Parameters.GetParameters()}";
             if (Start != null) { r += $"&start={Start.Value.ToUniversalTime()}"; }
             if (End != null) { r += $"&end={End.Value.ToUniversalTime()}"; }
-            if (Source != string.Empty) { r += $"&source={Source}"; }
+            if (Source != WeatherSources.none) { r += $"&source={Source}"; }
             return r;
         } 
     }

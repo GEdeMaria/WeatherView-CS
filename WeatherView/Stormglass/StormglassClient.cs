@@ -31,7 +31,7 @@ namespace GEM.API.Stormglass
             url = url.Replace(" ", "+");
             Debug.WriteLine($"getResponseBody({url})");
             HttpResponseMessage response = client.GetAsync(url).Result;
-            response.EnsureSuccessStatusCode();
+            //response.EnsureSuccessStatusCode();
             string body = response.Content.ReadAsStringAsync().Result;
 
             Debug.WriteLine(body);
@@ -48,12 +48,13 @@ namespace GEM.API.Stormglass
             client.DefaultRequestHeaders.Add("Authorization", _key);
         }
 
-        public MiniWeatherResponse GetMiniWeatherResponse(MiniWeatherRequest miniWeatherRequest)
+        public WeatherResponse GetWeatherResponse(WeatherRequest miniWeatherRequest)
         {
             var obj = getResponseBody(ENDPOINT + ENDPOINT_WEATHER + miniWeatherRequest.RequestString());
+            var hours = new List<WeatherHour>();
 
 
-            throw new Exception();
+
         }
 
         public ElevationResponse GetElevationResponse(ElevationRequest elevationRequest)
